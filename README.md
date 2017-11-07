@@ -10,6 +10,8 @@
 2. Edit the config file to your liking.
 3. Run the script again to get the newly generated file.
 
+You can also look which functions the program provides by adding the '-h' commandline-option.
+
 
 ### The Configfile Options
 - include_header: Adds copyright and other information.

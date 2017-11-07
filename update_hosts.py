@@ -143,18 +143,28 @@ if __name__ == "__main__":
     genconfig = False
     to_stdout = False
 
-    opts, _ = getopt.getopt(sys.argv[1:], "c:o:gr")
+    opts, _ = getopt.getopt(sys.argv[1:], "c:o:gh", ["config=", "outfile=", "regen", "to-stdout", "help"])
     for i in opts:
-        if i[0] == "-c":
+        if i[0] == "-h" or i[0] == "--help":
+            print("HostUpdater Script Commandline Options:\n"
+                  "\n"
+                  "-c <file> | --config=<file>, specify a custom config file.\n"
+                  "-o <file> | --outfile=<file>, specify a custom output file.\n"
+                  "-g        | --regen, regenerate config file.\n"
+                  "          | --to-stdout, output to STDOUT instead of a file.\n"
+                  "-h        | --help, shows this help.\n")
+            exit(0)
+
+        elif i[0] == "-c" or i[0] == "--config":
             config = i[1]
 
-        elif i[0] == "-o":
+        elif i[0] == "-o" or i[0] == "--outfile":
             outfile = i[1]
 
-        elif i[0] == "-g":
+        elif i[0] == "-g" or i[0] == "--regen":
             genconfig = True
 
-        elif i[0] == "-r":
+        elif i[0] == "--to-stdout":
             to_stdout = True
 
     if genconfig:

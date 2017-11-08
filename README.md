@@ -16,6 +16,7 @@ You can also look which functions the program provides by adding the '-h' comman
 ### The Configfile Options
 - include_header: Adds copyright and other information.
 - include_local_entries: Adds the localhost entries to the hosts file.
+- include_hostname_in_local_entry: Adds the hostname of the machine to the hosts file.
 - include_broadcasthost: Adds the 'broadcasthost' entry with 255.255.255.255
 - addresses: The actual addresses to add
   - All entries should have the format: "address": [ "host1", "host2" ]

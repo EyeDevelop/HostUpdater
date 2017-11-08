@@ -6,6 +6,7 @@ import os
 import errno
 import getopt
 import sys
+import ipaddress
 
 # region Constants
 header = "##\n" \
@@ -82,10 +83,9 @@ def main(save_as, to_stdout):
 
 
 def validate_ip(str_ip):
-    if str_ip.count(".") != 3:
-        return False
-
-    if not all([True if 0 <= x <= 255 else False for x in map(int, str_ip.split("."))]):
+    try:
+        ipaddress.ip_address(str_ip)
+    except ValueError:
         return False
 
     return True

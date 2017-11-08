@@ -23,10 +23,20 @@ local = "127.0.0.1\t\t\t{} {} {}\n".format(
     socket.gethostname()
 )
 
+local_wh = "127.0.0.1\t\t\t{} {}\n".format(
+    "localhost",
+    "localhost.localdomain"
+)
+
 local6 = "::1\t\t\t\t\t{} {} {}\n".format(
     "localhost",
     "localhost.localdomain",
     socket.gethostname()
+)
+
+local6_wh = "::1\t\t\t\t\t{} {}\n".format(
+    "localhost",
+    "localhost.localdomain"
 )
 
 broadcasthost = "255.255.255.255\t\tbroadcasthost\n"
@@ -42,6 +52,7 @@ def generate_config(config):
         default = "{\n" \
                   "    \"include_header\":\"yes\",\n" \
                   "    \"include_local_entries\":\"yes\",\n" \
+                  "    \"include_hostname_in_local_entry\":\"yes\",\n" \
                   "    \"include_broadcasthost\":\"yes\",\n" \
                   "    \n" \
                   "    \"addresses\":{\n" \
@@ -58,8 +69,12 @@ def main(save_as, to_stdout):
         entries.append(header)
 
     if conf["include_local_entries"].lower() == "yes":
-        entries.append(local)
-        entries.append(local6)
+        if conf["include_hostname_in_local_entry"].lower() == "yes":
+            entries.append(local)
+            entries.append(local6)
+        else:
+            entries.append(local_wh)
+            entries.append(local6_wh)
 
     if conf["include_broadcasthost"].lower() == "yes":
         entries.append(broadcasthost)
@@ -107,6 +122,10 @@ def validate_config(config):
 
     if not conf["include_local_entries"] or not (conf["include_local_entries"].lower() == "yes" or conf["include_local_entries"].lower() == "no"):
         print("CONF_ERR: Invalid value for 'include_local_entries'!")
+        exit(1)
+
+    if not conf["include_hostname_in_local_entry"] or not (conf["include_hostname_in_local_entry"].lower() == "yes" or conf["include_hostname_in_local_entry"].lower() == "no"):
+        print("CONF_ERR: Invalid value for 'include_hostname_in_local_entry'!")
         exit(1)
 
     if not conf["include_broadcasthost"] or not (conf["include_broadcasthost"].lower() == "yes" or conf["include_broadcasthost"].lower() == "no"):
